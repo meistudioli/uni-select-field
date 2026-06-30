@@ -38,16 +38,12 @@ body{position:relative;inline-size:100vw;block-size:100vh;margin:0;}
 
 uni-select-field {
   &::part(icon-subject) {
-    /*background-color: red;*/
+    /* style icon here */
   }
 
   &[data-hide-icon]::part(icon-subject) {
     display: none;
   }
-}
-
-[inert] uni-select-field {
-  --interactivity: inert;
 }
 </style>
 </head>
@@ -355,15 +351,11 @@ const handler = (evt) => {
 
     case 'required': {
       select.required = fd['required'] === 'y';
-
-      uniSelectField.refresh();
       break;
     }
 
     case 'disabled': {
       select.disabled = fd['disabled'] === 'y';
-
-      uniSelectField.refresh();
       break;
     }
 

@@ -78,15 +78,13 @@ ${_uniColorPalette}
 }
 
 :host {
-  &:has([slot="select"][required]) {
-    .main__subject__span::after {
-      content: '*';
-      color: var(--ct_icon_moderate_strong);
-      margin-inline-start: 4px;
+  @container style(--show-required-sign: 'true') {
+    .main {
+      --required-sign-display: inline;
     }
   }
 
-  &:has([slot="select"][disabled],[slot="select"][inert]) {
+  @container style(--is-select-inert: 'true') {
     .main {
       --text-color: var(--text-color-disabled);
       --caret-color: var(--caret-color-disabled);
@@ -94,16 +92,7 @@ ${_uniColorPalette}
 
     slot[name="select"] {
       interactivity: inert;
-    }
-  }
 
-  @container style(--interactivity: inert) {
-    .main {
-      --text-color: var(--text-color-disabled);
-    }
-
-    slot[name="select"] {
-      interactivity: inert;
     }
   }
 }
@@ -139,10 +128,12 @@ ${_uniColorPalette}
   --subject-color: var(--uni-select-field-subject-color, var(--ct_text_main_subtle));
   --caret-size: 20px;
 
+  --required-sign-display: none;
+
   /* size */
   --basis-padding: 12px;
   --large-border-radius: 24px;
-  --large-padding-inline: var(--basis-padding) calc(var(--basis-padding) * 2 + var(--basis-padding));
+  --large-padding-inline: 16px calc(var(--basis-padding) * 2 + var(--basis-padding));
   --large-block-size: 56px;
   --medium-border-radius: 44px;
   --medium-padding-inline: var(--basis-padding) calc(var(--basis-padding) * 2 + var(--basis-padding));
@@ -171,6 +162,13 @@ ${_uniColorPalette}
       font-size: 12px;
       color: var(--subject-color);
       line-height: 1.667;
+
+      &::after {
+        content: '*';
+        color: var(--ct_icon_moderate_strong);
+        margin-inline-start: 4px;
+        display: var(--required-sign-display);
+      }
     }
 
     em {
@@ -275,6 +273,40 @@ ${_uniColorPalette}
   </div>
 </div>
 `;
+
+/* style injection */
+const styleInjection = `
+uni-select-field {
+  --show-required-sign: 'false';
+  --is-select-inert: 'false';
+
+  &:has(select[required]) {
+    --show-required-sign: 'true';
+  }
+
+  &:has(select:is([disabled],[inert])) {
+    --is-select-inert: 'true';
+  }
+}
+
+[inert] uni-select-field {
+  --is-select-inert: 'true';
+}
+`;
+
+const INJECT_KEY = Symbol.for('uni.select.field.ui.injected');
+const uiInit = () => {
+  if (window[INJECT_KEY]) {
+    return;
+  }
+
+  const sheet = new CSSStyleSheet();
+  sheet.replaceSync(styleInjection);
+  document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+
+  window[INJECT_KEY] = true;
+};
+uiInit();
 
 export class UniSelectField extends HTMLElement {
   #data;

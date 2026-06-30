@@ -1,6 +1,6 @@
 {
   "name": "uni-select-field",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "<uni-select-field /> is an encapsulated Web Component built upon the foundation of the uniopen design language. Implementation is straightforward: simply slot a standard select element inside <uni-select-field />. The component instantly applies a user interface that aligns seamlessly with the uniopen design language guidelines. Furthermore, its visual styles can be dynamically adapted via native HTML attributes or JavaScript properties.",
   "keywords": [
     "web"
