@@ -1,5 +1,5 @@
-import { _wcl } from './common-lib.js';
-import { _wccss } from './common-css.js';
+import { _wcl } from 'https://unpkg.com/uni-input-field/mjs/common-lib.js';
+import { _wccss } from 'https://unpkg.com/uni-input-field/mjs/common-css.js';
 import {
   colorPalette as _uniColorPalette
 } from 'https://unpkg.com/uni-input-field/mjs/uni-css.js';
