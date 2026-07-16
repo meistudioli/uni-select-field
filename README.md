@@ -271,7 +271,7 @@ uni-select-field {
 
 ## Reference
 - [&lt;uni-select-field /> demo](https://blog.lalacube.com/mei/webComponent_uni-select-field.html)
-- [https://youtu.be/xRZQhgpA3aQ](YouTube tutorial)
-- [https://developer.chrome.com/blog/rfc-customizable-select](Request for developer feedback: customizable select)
-- [https://developer.chrome.com/docs/css-ui/anchor-positioning-api](The CSS anchor positioning API)
-- [https://chrome.dev/anchor-tool/](position-area)
+- [YouTube tutorial](https://youtu.be/xRZQhgpA3aQ)
+- [Request for developer feedback: customizable select](https://developer.chrome.com/blog/rfc-customizable-select)
+- [The CSS anchor positioning API](https://developer.chrome.com/docs/css-ui/anchor-positioning-api)
+- [position-area](https://chrome.dev/anchor-tool/)
