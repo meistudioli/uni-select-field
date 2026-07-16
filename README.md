@@ -114,6 +114,11 @@ uni-select-field {
   --uni-select-field-caret-color-disabled: var(--ct_icon_main_pale);
 
   --uni-select-field-subject-color: var(--ct_text_main_subtle);
+  --uni-select-field-outline-color: var(--ct_input-general_dim_container_default);
+
+  /* picker */
+  --uni-select-field-picker-position-area: block-end span-inline-end;
+  --uni-select-field-picker-margin: 8px 0;
 }
 </style>
 ```
@@ -266,3 +271,7 @@ uni-select-field {
 
 ## Reference
 - [&lt;uni-select-field /> demo](https://blog.lalacube.com/mei/webComponent_uni-select-field.html)
+- [https://youtu.be/xRZQhgpA3aQ](YouTube tutorial)
+- [https://developer.chrome.com/blog/rfc-customizable-select](Request for developer feedback: customizable select)
+- [https://developer.chrome.com/docs/css-ui/anchor-positioning-api](The CSS anchor positioning API)
+- [https://chrome.dev/anchor-tool/](position-area)

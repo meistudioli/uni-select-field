@@ -142,6 +142,28 @@ ${_uniColorPalette}
   --small-padding-inline: var(--basis-padding) calc(var(--basis-padding) * 2 + var(--basis-padding));
   --small-block-size: 32px;
 
+  /* outline */
+  --outline-color-normal: transparent;
+  --outline-color-active: var(--uni-select-field-outline-color, var(--ct_input-general_dim_container_default));
+  --outline-color: var(--outline-color-normal);
+
+  /* picker */
+  --picker-position-area: var(--uni-select-field-picker-position-area, block-end span-inline-end);
+  --picker-margin: var(--uni-select-field-picker-margin, 8px 0);
+
+  --option-background-color-normal: transparent;
+  --option-background-color-active: var(--ct_menu-general_unit_hover);
+  --option-background-color: var(--option-background-color-normal);
+
+  --picker-axis-y-normal: -20px;
+  --picker-axis-y-active: 0px;
+  --picker-axis-y: var(--picker-axis-y-normal);
+
+  --picker-opacity-normal: 0;
+  --picker-opacity-active: 1;
+  --picker-opacity: var(--picker-opacity-normal);
+
+
   --border-radius: var(--medium-border-radius);
   --padding-inline: var(--medium-padding-inline);
   --block-size: var(--medium-block-size);
@@ -251,18 +273,26 @@ ${_uniColorPalette}
     color: var(--text-color);
     max-inline-size: 100%;
     field-sizing: content;
-    block-size: var(--block-size);
+    min-block-size: var(--block-size);
     box-sizing: border-box;
     padding-inline: var(--padding-inline) !important;
     text-overflow: ellipsis;
     border: 1px solid var(--border-color);
     background-color: var(--background-color);
     border-radius: var(--border-radius);
+
+    outline: 3px solid var(--outline-color);
+    outline-offset: 2px;
+    transition: outline .2s ease;
+  }
+
+  ::slotted(select:focus-visible) {
+    --outline-color: var(--outline-color-active);
   }
 }
 </style>
 
-<div class="main" ontouchstart="" tabindex="0">
+<div class="main" ontouchstart="">
   <p class="main__subject">
     <em part="icon-subject"></em>
     <span class="main__subject__span"></span>
@@ -286,6 +316,101 @@ uni-select-field {
 
   &:has(select:is([disabled],[inert])) {
     --is-select-inert: 'true';
+  }
+
+  @supports (appearance: base-select) {
+    [slot=select] {
+      &, &::picker(select) {
+        appearance: base-select;
+      }
+
+      hr {
+        block-size: 1px;
+        background-color: var(--ct_divider_main_general);
+        margin-block: 2px;
+        border: 0 none;
+      }
+
+      /* select arrow icon */
+      &::picker-icon {
+        display: none;
+      }
+
+      &:open {
+        --picker-axis-y: var(--picker-axis-y-active);
+        --picker-opacity: var(--picker-opacity-active);
+      }
+
+      &::picker(select) {
+        position-area: var(--picker-position-area);
+        margin: var(--picker-margin);
+
+        max-inline-size: calc(100vw - 32px);
+
+        background-color: var(--ct_menu-general_container);
+        padding: 8px;
+        border-radius: 12px;
+        border: 0 none;
+        box-shadow: 0 2px 8px 0 rgba(0 0 0/.25);
+
+        translate: 0 var(--picker-axis-y);
+        opacity: var(--picker-opacity);
+
+        transition:
+          translate .25s ease,
+          opacity .25s ease,
+          display .25s allow-discrete,
+          overlay .25s allow-discrete
+        ;
+
+        @starting-style {
+          --picker-axis-y: var(--picker-axis-y-normal);
+          --picker-opacity: var(--picker-opacity-normal);
+        }
+      }
+
+      option {
+        max-inline-size: 100%;
+        overflow-wrap: break-word;
+        text-wrap: pretty;
+
+        font-size: 16px;
+        color: var(--ct_text_main_general);
+        line-height: 20px;
+        padding: 11px 8px;
+        border-radius: 10px;
+        outline: 0 none;
+        background: var(--option-background-color);
+        transition:
+          background .2s ease,
+          color .2s ease
+        ;
+
+        &:disabled {
+          opacity: .4;
+        }
+
+        /* hide all marks */
+        &::before,
+        &::checkmark {
+          display: none;
+        }
+
+        &:focus-visible {
+          --option-background-color: var(--option-background-color-active);
+        }
+
+        @media (hover: hover) {
+          &:hover:not(:disabled) {
+            --option-background-color: var(--option-background-color-active);
+          }
+        }
+
+        &:checked:not(:disabled) {
+          color: var(--ct_text_moderate_general);
+        }
+      }
+    }
   }
 }
 
@@ -317,7 +442,7 @@ export class UniSelectField extends HTMLElement {
     super();
 
     // template
-    this.attachShadow({ mode: 'open', delegatesFocus: true });
+    this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     // data
