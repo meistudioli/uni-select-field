@@ -204,16 +204,18 @@ ${_uniColorPalette}
 
   .main__info {
     --justify-content: space-between;
+    --info-display: flex;
 
     padding: 4px 8px;
     box-sizing: border-box;
-    display: flex;
+    display: var(--info-display);
     gap: 16px;
     justify-content: var(--justify-content);
     align-items: center;
 
     &:has(.main__info__message:empty) {
       --justify-content: flex-end;
+      --info-display: none;
     }
 
     .main__info__message {
@@ -264,6 +266,7 @@ ${_uniColorPalette}
     resize: none;
     appearance: none;
     box-shadow: none;
+    margin: 0;
 
     display: inline-flex;
     align-items: center;
@@ -275,7 +278,7 @@ ${_uniColorPalette}
     field-sizing: content;
     min-block-size: var(--block-size);
     box-sizing: border-box;
-    padding-inline: var(--padding-inline) !important;
+    padding-inline: var(--padding-inline);
     text-overflow: ellipsis;
     border: 1px solid var(--border-color);
     background-color: var(--background-color);
@@ -318,6 +321,40 @@ uni-select-field {
     --is-select-inert: 'true';
   }
 
+  :nth-child(n + 2 of [slot="select"]) {
+    display: none;
+  }
+
+  [slot="select"] {
+    outline: 0 none;
+    resize: none;
+    appearance: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+
+    display: inline-flex;
+    align-items: center;
+
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--text-color);
+    max-inline-size: 100%;
+    field-sizing: content;
+    min-block-size: var(--block-size);
+    box-sizing: border-box;
+    padding-inline: var(--padding-inline);
+    text-overflow: ellipsis;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+
+    outline: 3px solid var(--outline-color);
+    outline-offset: 2px;
+    transition: outline .2s ease;
+  }
+
+  /* customize */
   @supports (appearance: base-select) {
     [slot=select] {
       &, &::picker(select) {
